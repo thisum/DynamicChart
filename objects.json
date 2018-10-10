@@ -1,0 +1,29 @@
+{
+  "objects" :
+  {
+    "FI" : "1 :  fist",
+    "PI" : "6 :  pinch",
+    "TT" : "8 :  thumb tap",
+    "WT" : "13 : watch touch",
+    "MW" : "7 :  medium wrap",
+    "PD" : "3 :  precision disk",
+    "LP" : "5 :  lateral pinch",
+    "TP" : "4 :  tripod",
+    "LT" : "14 : lateral tripod",
+    "PS" : "2 :  power sphere",
+    "T2" : "11 : thumb-2 finger",
+    "IF" : "10 : index finger extension",
+    "LG" : "9 :  light tool",
+    "T3" : "12 : thumb-3 finger",
+  },
+  "grasps":
+  {
+    "RE" : "relax",
+  },
+  "repetitions":
+  {
+    "3T" : "No 3",
+    "2T" : "No 2",
+    "1T" : "No 1"
+  }
+}
