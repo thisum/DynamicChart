@@ -245,23 +245,26 @@ public class DynamicDataDemo extends ApplicationFrame implements ActionListener,
     {
         ++count;
         avg = movingAvgClass.calculateAvg(d);
-        grad = movingGradientClass.calculateGrad(d);
+        grad = movingGradientClass.calculateGrad((float)avg);
 
 //        this.avgSeries.add(count, avg);
         this.gradSeries.add(count, grad);
 
-//        if( start )
-//        {
-//            dataPoints++;
-//            countLbl.setText(""+dataPoints);
-//
-//            buf1.append(d);
-//            buf1.append("\n");
-//        }
-//        if(dataPoints == 256)
-//        {
-//            start = false;
-//        }
+        if( start )
+        {
+            dataPoints++;
+            countLbl.setText(""+dataPoints);
+
+            buf1.append(d);
+            buf1.append("\n");
+
+            buf2.append(grad);
+            buf2.append("\n");
+        }
+        if(dataPoints == 256)
+        {
+            start = false;
+        }
     }
 
     private double[] runHammingWindow(double[] array)
@@ -283,7 +286,7 @@ public class DynamicDataDemo extends ApplicationFrame implements ActionListener,
     private void writeToFile()
     {
 
-        try( Writer fileWriter = new FileWriter(writeCount + "data.txt") )
+        try( Writer fileWriter = new FileWriter("raw_data.txt") )
         {
             try
             {
@@ -298,7 +301,23 @@ public class DynamicDataDemo extends ApplicationFrame implements ActionListener,
         {
             e.printStackTrace();
         }
-
         buf1.setLength(0);
+
+        try( Writer fileWriter = new FileWriter("grad_data.txt") )
+        {
+            try
+            {
+                fileWriter.write("A\n" + buf2.toString());
+            }
+            catch( IOException e )
+            {
+                e.printStackTrace();
+            }
+        }
+        catch( IOException e )
+        {
+            e.printStackTrace();
+        }
+        buf2.setLength(0);
     }
 }

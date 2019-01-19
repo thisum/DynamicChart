@@ -54,7 +54,7 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
     private long clicketTime = 0;
     private long diff = 0;
     private double totalFreq = 0.0;
-    private int sampleSize = 43;
+    private int sampleSize = 80;
 
     public static void main(String[] args)
     {
@@ -98,7 +98,7 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
 
         readingLbl = new JLabel("data");
         readingLbl.setFont (readingLbl.getFont ().deriveFont (40.0f));
-        readingLbl.setPreferredSize(new Dimension(100, 50));
+        readingLbl.setPreferredSize(new Dimension(80, 50));
         nameTxt = new JTextField("** Add name here **");
 
         JPanel buttonPanel = new JPanel();
@@ -201,8 +201,8 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
             currentTask = graphPopPanel.updateCount(samples, true);
             if(currentTask != null && !currentTask.isEmpty() && !rawData.isEmpty())
             {
-                rawBuffer.append(currentTask);
-                rawBuffer.append(":");
+//                rawBuffer.append(currentTask);
+//                rawBuffer.append(":");
                 rawBuffer.append(rawData.toString());
             }
 
@@ -254,8 +254,8 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
                 }
                 else if(currentTask != null && !currentTask.isEmpty())
                 {
-                    rawBuffer.append(currentTask);
-                    rawBuffer.append(":");
+//                    rawBuffer.append(currentTask);
+//                    rawBuffer.append(":");
                     rawBuffer.append(rawData.toString());
                     rawBuffer.append("\n");
                 }
@@ -294,8 +294,8 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
                 start = false;
                 diff = System.nanoTime() - clicketTime;
                 samples++;
-                totalFreq += (count/(diff/1000000000.0));
-                graphPopPanel.setFreq(String.valueOf(count/(diff/1000000000.0)), String.valueOf(totalFreq/samples));
+                totalFreq += (count/(diff/800000000.0));
+                graphPopPanel.setFreq(String.valueOf(count/(diff/800000000.0)), String.valueOf(totalFreq/samples));
 
                 sampleLbl.setText(samples+"");
                 recordButton.setText("Record");
@@ -311,7 +311,7 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
                     JOptionPane.showMessageDialog(this, "Data caption error!!!. Please re-do the last gesture");
                     return;
                 }
-                if(samples == 42)
+                if(samples == 79)
                 {
                     JOptionPane.showMessageDialog(this, "Experiment completed. Please save the data" );
                     recordButton.setEnabled(false);
@@ -319,7 +319,7 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
             }
             else
             {
-                if(samples == 42)
+                if(samples == 79)
                 {
                     JOptionPane.showMessageDialog(this, "Experiment completed. Please save the data" );
                     recordButton.setEnabled(false);
@@ -333,8 +333,8 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
 
                 if(currentTask != null && !currentTask.isEmpty() && !rawData.isEmpty())
                 {
-                    rawBuffer.append(currentTask);
-                    rawBuffer.append(":");
+//                    rawBuffer.append(currentTask);
+//                    rawBuffer.append(":");
                     rawBuffer.append(rawData.toString());
                     rawBuffer.append("\n");
 
@@ -348,7 +348,7 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
                 avgData.clear();
                 count = 0;
                 clicketTime = System.nanoTime();
-                sampleSize = 43;
+                sampleSize = 80;
                 start = true;
             }
         }
@@ -389,11 +389,14 @@ public class DataCollectionClass extends JFrame implements ActionListener, DataO
         }
         else
         {
+            String data = "";
             try( Writer fileWriter = new FileWriter(nameTxt.getText() + "_raw_data.txt") )
             {
                 try
                 {
-                    fileWriter.write(rawBuffer.toString());
+                    data = rawBuffer.toString();
+                    data = data.replace("[", "").replace("]", "");
+                    fileWriter.write(data);
                     return true;
                 }
                 catch( IOException e )
